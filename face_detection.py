@@ -9,6 +9,7 @@ image = face_recognition.load_image_file('people.jpg')
 
 # Finding face locations in the image (pretrained HOG model)
 face_locations = face_recognition.face_locations(image)
+face_landmarks_list = face_recognition.face_landmarks(image)
 
 number_of_faces = len(face_locations)
 print(f"I found {number_of_faces} face(s) in this photograph")
@@ -27,6 +28,17 @@ for face_location in face_locations:
     # Let's draw a box around the face
     draw = PIL.ImageDraw.Draw(pil_image)
     draw.rectangle([left, top, right, bottom], outline="red")
+
+for face_landmarks in face_landmarks_list:
+
+    # Loop over each facial feature (eye, nose, mouth, lips, etc)
+    for name, list_of_points in face_landmarks.items():
+
+        # Print the location of each facial feature in this image
+        print(f"The {name} in this face has the following points: {list_of_points}")
+
+        # Let's trace out each facial feature in the image with a line!
+        draw.line(list_of_points, fill='red', width=2)
 
 # Display the image on screen
 pil_image.show() # this didn't work so I used the code block below
