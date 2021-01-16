@@ -10,6 +10,7 @@ image = face_recognition.load_image_file('people.jpg')
 # Finding face locations in the image (pretrained HOG model)
 face_locations = face_recognition.face_locations(image)
 face_landmarks_list = face_recognition.face_landmarks(image)
+face_encodings = face_recognition.face_encodings(image)
 
 number_of_faces = len(face_locations)
 print(f"I found {number_of_faces} face(s) in this photograph")
@@ -39,6 +40,16 @@ for face_landmarks in face_landmarks_list:
 
         # Let's trace out each facial feature in the image with a line!
         draw.line(list_of_points, fill='red', width=2)
+
+if len(face_encodings) == 0:
+    # No faces found in the image.
+    print("No faces were found!")
+else:
+    # Grab the first face encoding
+    first_face_encoding = face_encodings[0]
+
+    # Print the results
+    print(first_face_encoding)
 
 # Display the image on screen
 pil_image.show() # this didn't work so I used the code block below
